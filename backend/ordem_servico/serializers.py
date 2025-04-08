@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import OrdemServico, Patrimonio, Ambiente, Manutentor, Responsavel, Gestor
+from .models import OrdemServico, Patrimonio, Ambiente, Manutentor, Responsavel, Gestor, Historico
 
 class OrdemServicoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,4 +29,9 @@ class ResponsavelSerializer(serializers.ModelSerializer):
 class GestorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gestor
+        fields = '__all__'
+
+class HistoricoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Historico
         fields = '__all__'

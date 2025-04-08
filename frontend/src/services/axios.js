@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api', // Adjust based on your API URL
+  baseURL: 'http://127.0.0.1:8000/api',
 });
 
-// Add a request interceptor to include the JWT token in the headers
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('jwt_token'); // Assuming you're saving the JWT in localStorage
+    const token = localStorage.getItem('jwt_token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

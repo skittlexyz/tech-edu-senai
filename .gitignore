@@ -20,4 +20,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.sqlite3
+backend/*.sqlite3

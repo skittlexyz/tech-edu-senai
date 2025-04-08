@@ -4,7 +4,7 @@ import axios from '../services/axios';
 const HeritageCrud = () => {
     const [patrimonios, setPatrimonios] = useState([]);
     const [newPatrimonio, setNewPatrimonio] = useState({ ni: '', descricao: '', localizacao: '' });
-    const [editingPatrimonio, setEditingPatrimonio] = useState(null); // Estado para edição
+    const [editingPatrimonio, setEditingPatrimonio] = useState(null);
 
     const fetchPatrimonios = async () => {
         try {
@@ -40,7 +40,7 @@ const HeritageCrud = () => {
 
     const handleEditPatrimonio = (patrimonio) => {
         setEditingPatrimonio(patrimonio);
-        setNewPatrimonio(patrimonio); // Preenche os campos com os dados do item a ser editado
+        setNewPatrimonio(patrimonio);
     };
 
     const handleUpdatePatrimonio = async () => {

@@ -11,7 +11,6 @@ const ManagerCrud = () => {
     });
     const [editingGestor, setEditingGestor] = useState(null);
 
-    // Fetch all gestores
     const fetchGestores = async () => {
         try {
             const response = await axios.get('/data/gestor/');
@@ -21,35 +20,31 @@ const ManagerCrud = () => {
         }
     };
 
-    // Fetch data on component mount
     useEffect(() => {
         fetchGestores();
     }, []);
 
-    // Handle creating a new gestor
     const handleCreateGestor = async () => {
         try {
             await axios.post('/data/gestor/', newGestor);
-            fetchGestores(); // Update gestores list
+            fetchGestores();
             setNewGestor({ ni: '', nome: '', area: '', cargo: '' });
         } catch (error) {
             console.error('Error creating gestor:', error);
         }
     };
 
-    // Handle updating an existing gestor
     const handleUpdateGestor = async () => {
         try {
             await axios.put(`/data/gestor/${editingGestor.id}/`, newGestor);
             fetchGestores();
-            setEditingGestor(null); // Clear the editing state
+            setEditingGestor(null);
             setNewGestor({ ni: '', nome: '', area: '', cargo: '' });
         } catch (error) {
             console.error('Error updating gestor:', error);
         }
     };
 
-    // Handle deleting a gestor
     const handleDeleteGestor = async (id) => {
         try {
             await axios.delete(`/data/gestor/${id}/`);
@@ -59,13 +54,11 @@ const ManagerCrud = () => {
         }
     };
 
-    // Handle selecting a gestor for editing
     const handleEditGestor = (gestor) => {
         setEditingGestor(gestor);
         setNewGestor(gestor);
     };
 
-    // Generate the list of gestores
     const listChildren = () => {
         if (Array.isArray(gestores) && gestores.length > 0) {
             return gestores.map((gestor) => (

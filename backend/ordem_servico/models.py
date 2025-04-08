@@ -73,3 +73,7 @@ class Gestor(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Historico(models.Model):
+    ordem = models.ForeignKey('OrdemServico', on_delete=models.SET_NULL, null=True, blank=True)
+    data_encerramento = models.DateTimeField()

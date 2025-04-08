@@ -9,7 +9,6 @@ const ResponsibleCrud = () => {
     });
     const [editingResponsavel, setEditingResponsavel] = useState(null);
 
-    // Fetch all responsaveis
     const fetchResponsaveis = async () => {
         try {
             const response = await axios.get('/data/responsavel/');
@@ -19,35 +18,31 @@ const ResponsibleCrud = () => {
         }
     };
 
-    // Fetch data on component mount
     useEffect(() => {
         fetchResponsaveis();
     }, []);
 
-    // Handle creating a new responsavel
     const handleCreateResponsavel = async () => {
         try {
             await axios.post('/data/responsavel/', newResponsavel);
-            fetchResponsaveis(); // Update responsaveis list
+            fetchResponsaveis();
             setNewResponsavel({ ni: '', nome: '' });
         } catch (error) {
             console.error('Error creating responsavel:', error);
         }
     };
 
-    // Handle updating an existing responsavel
     const handleUpdateResponsavel = async () => {
         try {
             await axios.put(`/data/responsavel/${editingResponsavel.id}/`, newResponsavel);
             fetchResponsaveis();
-            setEditingResponsavel(null); // Clear the editing state
+            setEditingResponsavel(null);
             setNewResponsavel({ ni: '', nome: '' });
         } catch (error) {
             console.error('Error updating responsavel:', error);
         }
     };
 
-    // Handle deleting a responsavel
     const handleDeleteResponsavel = async (id) => {
         try {
             await axios.delete(`/data/responsavel/${id}/`);
@@ -57,13 +52,11 @@ const ResponsibleCrud = () => {
         }
     };
 
-    // Handle selecting a responsavel for editing
     const handleEditResponsavel = (responsavel) => {
         setEditingResponsavel(responsavel);
         setNewResponsavel(responsavel);
     };
 
-    // Generate the list of responsaveis
     const listChildren = () => {
         if (Array.isArray(responsaveis) && responsaveis.length > 0) {
             return responsaveis.map((responsavel) => (

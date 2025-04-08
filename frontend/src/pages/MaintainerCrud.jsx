@@ -3,6 +3,7 @@ import axios from '../services/axios';
 
 const MaintainerCrud = () => {
     const [manutentores, setManutentores] = useState([]);
+    const [gestores, setGestores] = useState([]);  // State for gestores
     const [newManutentor, setNewManutentor] = useState({ ni: '', nome: '', area: '', gestor: '' });
     const [editingManutentor, setEditingManutentor] = useState(null);
 
@@ -15,8 +16,18 @@ const MaintainerCrud = () => {
         }
     };
 
+    const fetchGestores = async () => {
+        try {
+            const response = await axios.get('/data/gestor/');
+            setGestores(response.data);
+        } catch (error) {
+            console.error('Error fetching gestores:', error);
+        }
+    };
+
     useEffect(() => {
         fetchManutentores();
+        fetchGestores();
     }, []);
 
     const handleCreateManutentor = async () => {
@@ -58,7 +69,7 @@ const MaintainerCrud = () => {
         if (manutentores.length > 0) {
             return manutentores.map((manutentor) => (
                 <li key={manutentor.id}>
-                    {manutentor.nome} - {manutentor.area}
+                    {manutentor.nome} - {manutentor.area} - Gestor: {manutentor.gestor}
                     <button onClick={() => handleEditManutentor(manutentor)}>Edit</button>
                     <button onClick={() => handleDeleteManutentor(manutentor.id)}>Delete</button>
                 </li>
@@ -90,12 +101,19 @@ const MaintainerCrud = () => {
                     value={newManutentor.area}
                     onChange={(e) => setNewManutentor({ ...newManutentor, area: e.target.value })}
                 />
-                <input
-                    type="text"
-                    placeholder="Gestor"
+
+                <select
                     value={newManutentor.gestor}
                     onChange={(e) => setNewManutentor({ ...newManutentor, gestor: e.target.value })}
-                />
+                >
+                    <option value="">Select Gestor</option>
+                    {gestores.map((gestor) => (
+                        <option key={gestor.id} value={gestor.id}>
+                            {gestor.nome}
+                        </option>
+                    ))}
+                </select>
+
                 <button onClick={editingManutentor ? handleUpdateManutentor : handleCreateManutentor}>
                     {editingManutentor ? 'Update Manutentor' : 'Create Manutentor'}
                 </button>

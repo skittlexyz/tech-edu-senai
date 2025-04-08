@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import OrdemServico, Patrimonio, Ambiente, Manutentor, Responsavel, Gestor
-from .serializers import OrdemServicoSerializer, PatrimonioSerializer, AmbienteSerializer, ManutentorSerializer, ResponsavelSerializer, GestorSerializer
+from .models import OrdemServico, Patrimonio, Ambiente, Manutentor, Responsavel, Gestor, Historico
+from .serializers import OrdemServicoSerializer, PatrimonioSerializer, AmbienteSerializer, ManutentorSerializer, ResponsavelSerializer, GestorSerializer, HistoricoSerializer
 
 class OrdemServicoViewSet(viewsets.ModelViewSet):
     queryset = OrdemServico.objects.all()
@@ -31,4 +31,9 @@ class ResponsavelViewSet(viewsets.ModelViewSet):
 class GestorViewSet(viewsets.ModelViewSet):
     queryset = Gestor.objects.all()
     serializer_class = GestorSerializer
+    permission_classes = [IsAuthenticated]
+
+class HistoricoViewSet(viewsets.ModelViewSet):
+    queryset = Historico.objects.all()
+    serializer_class = HistoricoSerializer
     permission_classes = [IsAuthenticated]

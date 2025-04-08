@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from '../services/axios';
 
 const ServiceOrderCrud = () => {
-  const [orders, setOrders] = useState([]); // Initialize as empty array
+  const [orders, setOrders] = useState([]);
   const [newOrder, setNewOrder] = useState({
     descricao: '',
     status: 'iniciada',
     prioridade: 'media',
-    ambiente: '',  // Add ambiente (ID of the ambiente)
-    manutentor: '', // Add manutentor (ID of the manutentor)
+    ambiente: '',
+    manutentor: '',
   });
-  const [ambientes, setAmbientes] = useState([]); // Store ambiente options
-  const [manutentores, setManutentores] = useState([]); // Store manutentor options
-  const [editingOrder, setEditingOrder] = useState(null); // State for editing an order
+  const [ambientes, setAmbientes] = useState([]);
+  const [manutentores, setManutentores] = useState([]);
+  const [editingOrder, setEditingOrder] = useState(null);
 
-  // Fetch all orders
   const fetchOrders = async () => {
     try {
       const response = await axios.get('/data/ordem-servico/');
@@ -28,7 +27,6 @@ const ServiceOrderCrud = () => {
     }
   };
 
-  // Fetch all ambientes
   const fetchAmbientes = async () => {
     try {
       const response = await axios.get('/data/ambiente/');
@@ -38,7 +36,6 @@ const ServiceOrderCrud = () => {
     }
   };
 
-  // Fetch all manutentores
   const fetchManutentores = async () => {
     try {
       const response = await axios.get('/data/manutentor/');
@@ -48,18 +45,16 @@ const ServiceOrderCrud = () => {
     }
   };
 
-  // Fetch data on component mount
   useEffect(() => {
-    fetchOrders(); // Fetch orders
-    fetchAmbientes(); // Fetch ambientes
-    fetchManutentores(); // Fetch manutentores
+    fetchOrders();
+    fetchAmbientes();
+    fetchManutentores();
   }, []);
 
-  // Handle creating a new order
   const handleCreateOrder = async () => {
     try {
       await axios.post('/data/ordem-servico/', newOrder);
-      fetchOrders(); // Update the order list
+      fetchOrders();
       setNewOrder({
         descricao: '',
         status: 'iniciada',
@@ -72,12 +67,11 @@ const ServiceOrderCrud = () => {
     }
   };
 
-  // Handle updating an existing order
   const handleUpdateOrder = async () => {
     try {
       await axios.put(`/data/ordem-servico/${editingOrder.id}/`, newOrder);
-      fetchOrders(); // Update the order list
-      setEditingOrder(null); // Clear the editing state
+      fetchOrders();
+      setEditingOrder(null);
       setNewOrder({
         descricao: '',
         status: 'iniciada',
@@ -90,23 +84,20 @@ const ServiceOrderCrud = () => {
     }
   };
 
-  // Handle deleting an order
   const handleDeleteOrder = async (id) => {
     try {
       await axios.delete(`/data/ordem-servico/${id}/`);
-      fetchOrders(); // Update the order list
+      fetchOrders();
     } catch (error) {
       console.error('Error deleting order:', error);
     }
   };
 
-  // Handle selecting an order for editing
   const handleEditOrder = (order) => {
     setEditingOrder(order);
-    setNewOrder(order); // Fill the form with the current order's data
+    setNewOrder(order);
   };
 
-  // Generate the list of orders
   const listChildren = () => {
     if (Array.isArray(orders) && orders.length > 0) {
       return orders.map((order) => (
@@ -149,7 +140,6 @@ const ServiceOrderCrud = () => {
           <option value="baixa">Baixa</option>
         </select>
 
-        {/* Add Ambiente selection */}
         <select
           value={newOrder.ambiente}
           onChange={(e) => setNewOrder({ ...newOrder, ambiente: e.target.value })}
@@ -162,7 +152,6 @@ const ServiceOrderCrud = () => {
           ))}
         </select>
 
-        {/* Add Manutentor selection */}
         <select
           value={newOrder.manutentor}
           onChange={(e) => setNewOrder({ ...newOrder, manutentor: e.target.value })}
