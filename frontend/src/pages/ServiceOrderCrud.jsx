@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../services/axios';
 
-const OrderServiceCrud = () => {
+const ServiceOrderCrud = () => {
   const [orders, setOrders] = useState([]); // Initialize as empty array
   const [newOrder, setNewOrder] = useState({
     descricao: '',
@@ -12,6 +12,7 @@ const OrderServiceCrud = () => {
   });
   const [ambientes, setAmbientes] = useState([]); // Store ambiente options
   const [manutentores, setManutentores] = useState([]); // Store manutentor options
+  const [editingOrder, setEditingOrder] = useState(null); // State for editing an order
 
   // Fetch all orders
   const fetchOrders = async () => {
@@ -30,7 +31,7 @@ const OrderServiceCrud = () => {
   // Fetch all ambientes
   const fetchAmbientes = async () => {
     try {
-      const response = await axios.get('/data/ambiente/'); // Make sure this endpoint is correct
+      const response = await axios.get('/data/ambiente/');
       setAmbientes(response.data);
     } catch (error) {
       console.error('Error fetching ambientes:', error);
@@ -40,7 +41,7 @@ const OrderServiceCrud = () => {
   // Fetch all manutentores
   const fetchManutentores = async () => {
     try {
-      const response = await axios.get('/data/manutentor/'); // Make sure this endpoint is correct
+      const response = await axios.get('/data/manutentor/');
       setManutentores(response.data);
     } catch (error) {
       console.error('Error fetching manutentores:', error);
@@ -57,17 +58,35 @@ const OrderServiceCrud = () => {
   // Handle creating a new order
   const handleCreateOrder = async () => {
     try {
-      await axios.post('/data/ordem-servico/', newOrder); // Send new order with all necessary fields
+      await axios.post('/data/ordem-servico/', newOrder);
       fetchOrders(); // Update the order list
       setNewOrder({
         descricao: '',
         status: 'iniciada',
         prioridade: 'media',
-        ambiente: '',  // Reset to empty
-        manutentor: '', // Reset to empty
+        ambiente: '',
+        manutentor: '',
       });
     } catch (error) {
       console.error('Error creating order:', error);
+    }
+  };
+
+  // Handle updating an existing order
+  const handleUpdateOrder = async () => {
+    try {
+      await axios.put(`/data/ordem-servico/${editingOrder.id}/`, newOrder);
+      fetchOrders(); // Update the order list
+      setEditingOrder(null); // Clear the editing state
+      setNewOrder({
+        descricao: '',
+        status: 'iniciada',
+        prioridade: 'media',
+        ambiente: '',
+        manutentor: '',
+      });
+    } catch (error) {
+      console.error('Error updating order:', error);
     }
   };
 
@@ -81,12 +100,19 @@ const OrderServiceCrud = () => {
     }
   };
 
+  // Handle selecting an order for editing
+  const handleEditOrder = (order) => {
+    setEditingOrder(order);
+    setNewOrder(order); // Fill the form with the current order's data
+  };
+
   // Generate the list of orders
   const listChildren = () => {
     if (Array.isArray(orders) && orders.length > 0) {
       return orders.map((order) => (
         <li key={order.id}>
           {order.descricao} - {order.status} - {order.prioridade}
+          <button onClick={() => handleEditOrder(order)}>Edit</button>
           <button onClick={() => handleDeleteOrder(order.id)}>Delete</button>
         </li>
       ));
@@ -149,7 +175,9 @@ const OrderServiceCrud = () => {
           ))}
         </select>
 
-        <button onClick={handleCreateOrder}>Create Order</button>
+        <button onClick={editingOrder ? handleUpdateOrder : handleCreateOrder}>
+          {editingOrder ? 'Update Order' : 'Create Order'}
+        </button>
       </div>
 
       <ul>
@@ -159,4 +187,4 @@ const OrderServiceCrud = () => {
   );
 };
 
-export default OrderServiceCrud;
+export default ServiceOrderCrud;
