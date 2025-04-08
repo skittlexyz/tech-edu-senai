@@ -16,22 +16,22 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <h1>Gerenciador de<br/>Ordens de Serviço</h1>
-          <div>
-            <a href="/register">Register</a>
-            <a href="/login">Login</a>
+      <div className='w-screen h-screen bg-neutral-800 text-white flex flex-col'>
+        <nav className='bg-neutral-900 w-screen h-fit py-4 flex justify-between items-start gap-8 px-4'>
+          <h1 className='text-xl font-bold'>Gerenciador<br/><span className='text-red-500'>SENAI</span></h1>
+          <div className='flex gap-8 flex-wrap'>
+            <a className='hover:underline' href="/register">Register</a>
+            <a className='hover:underline' href="/login">Login</a>
             {authenticated && (
               <>
-                <a href="/serviceorder">CRUD de Ordens de Serviço</a>
-                <a href="/maintainer">CRUD de Manutentores</a>
-                <a href="/heritage">CRUD de Patrimônios</a>
-                <a href="/ambient">Crud de Ambientes</a>
-                <a href="/manager">Crud de Gestores</a>
-                <a href="/responsible">Crud de Responsáveis</a>
-                <a href="/history">Crud de Histórico</a>
-                <a href="/logout">Logout</a>
+                <a className='hover:underline' href="/serviceorder">CRUD de Ordens de Serviço</a>
+                <a className='hover:underline' href="/maintainer">CRUD de Manutentores</a>
+                <a className='hover:underline' href="/heritage">CRUD de Patrimônios</a>
+                <a className='hover:underline' href="/ambient">Crud de Ambientes</a>
+                <a className='hover:underline' href="/manager">Crud de Gestores</a>
+                <a className='hover:underline' href="/responsible">Crud de Responsáveis</a>
+                <a className='hover:underline' href="/history">Crud de Histórico</a>
+                <a className='hover:underline' href="/logout">Logout</a>
               </>
             )}
           </div>
@@ -50,8 +50,8 @@ function App() {
           <Route path="/history" element={authenticated ? <HistoricoCrud /> : <Login setAuthenticated={setAuthenticated} />} />
           <Route path="/logout" element={<Logout setAuthenticated={setAuthenticated} />} />
         </Routes>
-        <div>
-              Footer
+        <div className='bg-neutral-900 w-screen flex justify-center text-neutral-500 py-4'>
+              SENAI 2025
         </div>
       </div>
     </Router>

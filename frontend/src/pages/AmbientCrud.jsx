@@ -56,39 +56,69 @@ const AmbientCrud = () => {
 
     const listChildren = () => {
         if (ambientes.length > 0) {
-            return ambientes.map((ambiente) => (
-                <li key={ambiente.id}>
-                    {ambiente.ni} - {ambiente.nome}
-                    <button onClick={() => handleEditAmbiente(ambiente)}>Edit</button>
-                    <button onClick={() => handleDeleteAmbiente(ambiente.id)}>Delete</button>
-                </li>
-            ));
+            return (
+                <>
+                    <tr className='text-left'>
+                        <th className='border border-neutral-500 px-2 py-1'>NI</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Nome</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+                    </tr>
+                    {ambientes.map((ambiente) => (
+                        <tr key={ambiente.id}>
+                            <td className='border border-neutral-500 px-2 py-1'>{ambiente.ni}</td>
+                            <td className='border border-neutral-500 px-2 py-1'>{ambiente.nome}</td>
+                            <td className='border border-neutral-500 px-2 py-1 gap-2'>
+                                <button
+                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                    onClick={() => handleEditAmbiente(ambiente)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                    onClick={() => handleDeleteAmbiente(ambiente.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </>
+            );
         } else {
-            return <p>No ambientes found.</p>;
+            return <p className='text-neutral-500'>Nenhum ambiente encontrado.</p>;
         }
     };
 
     return (
-        <div>
-            <h2>Ambientes</h2>
-            <div>
+        <div className='h-full p-8 flex flex-col gap-4'>
+            <h2 className='text-2xl'>Ambientes</h2>
+            <div className='flex gap-4'>
                 <input
+                    className='border px-2 rounded-md py-1'
                     type="text"
                     placeholder="NI"
                     value={newAmbiente.ni}
                     onChange={(e) => setNewAmbiente({ ...newAmbiente, ni: e.target.value })}
                 />
                 <input
+                    className='border px-2 rounded-md py-1'
                     type="text"
                     placeholder="Nome"
                     value={newAmbiente.nome}
                     onChange={(e) => setNewAmbiente({ ...newAmbiente, nome: e.target.value })}
                 />
-                <button onClick={editingAmbiente ? handleUpdateAmbiente : handleCreateAmbiente}>
-                    {editingAmbiente ? 'Update Ambiente' : 'Create Ambiente'}
+                <button
+                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'
+                    onClick={editingAmbiente ? handleUpdateAmbiente : handleCreateAmbiente}
+                >
+                    {editingAmbiente ? 'Atualizar Ambiente' : 'Criar Ambiente'}
                 </button>
             </div>
-            <ul>{listChildren()}</ul>
+            <hr />
+            <table>
+                {listChildren()}
+            </table>
         </div>
     );
 };

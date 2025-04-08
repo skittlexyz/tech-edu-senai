@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../services/axios';
 
-const HistoricoCrud = () => {
+const HistoryCrud = () => {
     const [historicos, setHistoricos] = useState([]);
     const [newHistorico, setNewHistorico] = useState({ ordem: '', data_encerramento: '' });
-    const [orders, setOrders] = useState([]); // Estado para armazenar ordens de serviço
+    const [orders, setOrders] = useState([]);
     const [editingHistorico, setEditingHistorico] = useState(null);
 
-    // Função para buscar históricos
     const fetchHistoricos = async () => {
         try {
             const response = await axios.get('/data/historico/');
@@ -17,7 +16,6 @@ const HistoricoCrud = () => {
         }
     };
 
-    // Função para buscar ordens de serviço
     const fetchOrders = async () => {
         try {
             const response = await axios.get('/data/ordem-servico/');
@@ -29,73 +27,90 @@ const HistoricoCrud = () => {
 
     useEffect(() => {
         fetchHistoricos();
-        fetchOrders(); // Buscar ordens de serviço
+        fetchOrders();
     }, []);
 
-    // Função para criar um novo histórico
     const handleCreateHistorico = async () => {
         try {
             await axios.post('/data/historico/', newHistorico);
-            fetchHistoricos(); // Atualizar lista de históricos
-            setNewHistorico({ ordem: '', data_encerramento: '' }); // Resetar o formulário
+            fetchHistoricos();
+            setNewHistorico({ ordem: '', data_encerramento: '' });
         } catch (error) {
             console.error('Error creating historico:', error);
         }
     };
 
-    // Função para atualizar um histórico
     const handleUpdateHistorico = async () => {
         try {
             await axios.put(`/data/historico/${editingHistorico.id}/`, newHistorico);
-            fetchHistoricos(); // Atualizar lista de históricos
-            setEditingHistorico(null); // Resetar o estado de edição
-            setNewHistorico({ ordem: '', data_encerramento: '' }); // Resetar o formulário
+            fetchHistoricos();
+            setEditingHistorico(null);
+            setNewHistorico({ ordem: '', data_encerramento: '' });
         } catch (error) {
             console.error('Error updating historico:', error);
         }
     };
 
-    // Função para excluir um histórico
     const handleDeleteHistorico = async (id) => {
         try {
             await axios.delete(`/data/historico/${id}/`);
-            fetchHistoricos(); // Atualizar lista de históricos
+            fetchHistoricos();
         } catch (error) {
             console.error('Error deleting historico:', error);
         }
     };
 
-    // Função para editar um histórico
     const handleEditHistorico = (historico) => {
         setEditingHistorico(historico);
         setNewHistorico(historico);
     };
 
-    // Função para listar os históricos
     const listChildren = () => {
         if (historicos.length > 0) {
-            return historicos.map((historico) => (
-                <li key={historico.id}>
-                    Ordem: {historico.ordem?.descricao} - Data de Encerramento: {historico.data_encerramento}
-                    <button onClick={() => handleEditHistorico(historico)}>Edit</button>
-                    <button onClick={() => handleDeleteHistorico(historico.id)}>Delete</button>
-                </li>
-            ));
+            return (
+                <>
+                    <tr className='text-left'>
+                        <th className='border border-neutral-500 px-2 py-1'>Ordem</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Data de Encerramento</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+                    </tr>
+                    {historicos.map((historico) => (
+                        <tr key={historico.id}>
+                            <td className='border border-neutral-500 px-2 py-1'>{historico.ordem?.descricao}</td>
+                            <td className='border border-neutral-500 px-2 py-1'>{historico.data_encerramento}</td>
+                            <td className='border border-neutral-500 px-2 py-1'>
+                                <button
+                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                    onClick={() => handleEditHistorico(historico)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                    onClick={() => handleDeleteHistorico(historico.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </>
+            );
         } else {
-            return <p>No historicos found.</p>;
+            return <p className='text-neutral-500'>Nenhum histórico encontrado.</p>;
         }
     };
 
     return (
-        <div>
-            <h2>Históricos</h2>
-            <div>
-                {/* Select dropdown para ordens de serviço */}
+        <div className='h-full p-8 flex flex-col gap-4'>
+            <h2 className='text-2xl'>Históricos</h2>
+            <div className='flex gap-4'>
                 <select
+                    className='border px-2 rounded-md py-1'
                     value={newHistorico.ordem}
                     onChange={(e) => setNewHistorico({ ...newHistorico, ordem: e.target.value })}
                 >
-                    <option value="">Select Ordem</option>
+                    <option value="">Selecione a Ordem</option>
                     {orders.map((order) => (
                         <option key={order.id} value={order.id}>
                             {order.descricao}
@@ -104,20 +119,27 @@ const HistoricoCrud = () => {
                 </select>
 
                 <input
+                    className='border px-2 rounded-md py-1'
                     type="datetime-local"
-                    placeholder="Data de Encerramento"
                     value={newHistorico.data_encerramento}
                     onChange={(e) => setNewHistorico({ ...newHistorico, data_encerramento: e.target.value })}
                 />
 
-                <button onClick={editingHistorico ? handleUpdateHistorico : handleCreateHistorico}>
-                    {editingHistorico ? 'Update Historico' : 'Create Historico'}
+                <button
+                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'
+                    onClick={editingHistorico ? handleUpdateHistorico : handleCreateHistorico}
+                >
+                    {editingHistorico ? 'Atualizar Histórico' : 'Criar Histórico'}
                 </button>
             </div>
 
-            <ul>{listChildren()}</ul>
+            <hr />
+
+            <table>
+                {listChildren()}
+            </table>
         </div>
     );
 };
 
-export default HistoricoCrud;
+export default HistoryCrud;

@@ -59,42 +59,71 @@ const ResponsibleCrud = () => {
 
     const listChildren = () => {
         if (Array.isArray(responsaveis) && responsaveis.length > 0) {
-            return responsaveis.map((responsavel) => (
-                <li key={responsavel.id}>
-                    {responsavel.nome} - {responsavel.ni}
-                    <button onClick={() => handleEditResponsavel(responsavel)}>Edit</button>
-                    <button onClick={() => handleDeleteResponsavel(responsavel.id)}>Delete</button>
-                </li>
-            ));
+            return (
+                <table className="w-full">
+                    <thead>
+                        <tr className="text-left">
+                            <th className="border border-neutral-500 px-2 py-1">Nome</th>
+                            <th className="border border-neutral-500 px-2 py-1">NI</th>
+                            <th className="border border-neutral-500 px-2 py-1">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {responsaveis.map((responsavel) => (
+                            <tr key={responsavel.id}>
+                                <td className="border border-neutral-500 px-2 py-1">{responsavel.nome}</td>
+                                <td className="border border-neutral-500 px-2 py-1">{responsavel.ni}</td>
+                                <td className="border border-neutral-500 px-2 py-1 gap-2">
+                                    <button
+                                        className="border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2"
+                                        onClick={() => handleEditResponsavel(responsavel)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="border rounded-md cursor-pointer hover:text-red-500 px-2"
+                                        onClick={() => handleDeleteResponsavel(responsavel.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            );
         } else {
-            return <p>No responsaveis found.</p>;
+            return <p className="text-neutral-500">Nenhum responsável encontrado.</p>;
         }
     };
 
     return (
-        <div>
-            <h2>Responsaveis</h2>
-            <div>
+        <div className="h-full p-8 flex flex-col gap-4">
+            <h2 className="text-2xl">Responsáveis</h2>
+            <div className="flex gap-4">
                 <input
+                    className="border px-2 rounded-md py-1"
                     type="text"
                     placeholder="NI"
                     value={newResponsavel.ni}
                     onChange={(e) => setNewResponsavel({ ...newResponsavel, ni: e.target.value })}
                 />
                 <input
+                    className="border px-2 rounded-md py-1"
                     type="text"
                     placeholder="Nome"
                     value={newResponsavel.nome}
                     onChange={(e) => setNewResponsavel({ ...newResponsavel, nome: e.target.value })}
                 />
-                <button onClick={editingResponsavel ? handleUpdateResponsavel : handleCreateResponsavel}>
-                    {editingResponsavel ? 'Update Responsavel' : 'Create Responsavel'}
+                <button
+                    className="border rounded-md cursor-pointer hover:text-red-500 px-2 py-1"
+                    onClick={editingResponsavel ? handleUpdateResponsavel : handleCreateResponsavel}
+                >
+                    {editingResponsavel ? 'Atualizar Responsável' : 'Criar Responsável'}
                 </button>
             </div>
-
-            <ul>
-                {listChildren()}
-            </ul>
+            <hr />
+            {listChildren()}
         </div>
     );
 };

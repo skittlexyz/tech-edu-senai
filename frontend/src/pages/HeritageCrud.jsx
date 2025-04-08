@@ -56,45 +56,78 @@ const HeritageCrud = () => {
 
     const listChildren = () => {
         if (patrimonios.length > 0) {
-            return patrimonios.map((patrimonio) => (
-                <li key={patrimonio.id}>
-                    {patrimonio.ni} - {patrimonio.descricao}
-                    <button onClick={() => handleEditPatrimonio(patrimonio)}>Edit</button>
-                    <button onClick={() => handleDeletePatrimonio(patrimonio.id)}>Delete</button>
-                </li>
-            ));
+            return (
+                <>
+                    <tr className='text-left'>
+                        <th className='border border-neutral-500 px-2 py-1'>NI</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Descrição</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Localização</th>
+                        <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+                    </tr>
+                    {patrimonios.map((patrimonio) => (
+                        <tr key={patrimonio.id}>
+                            <td className='border border-neutral-500 px-2 py-1'>{patrimonio.ni}</td>
+                            <td className='border border-neutral-500 px-2 py-1'>{patrimonio.descricao}</td>
+                            <td className='border border-neutral-500 px-2 py-1'>{patrimonio.localizacao}</td>
+                            <td className='border border-neutral-500 px-2 py-1 gap-2'>
+                                <button
+                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                    onClick={() => handleEditPatrimonio(patrimonio)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                    onClick={() => handleDeletePatrimonio(patrimonio.id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </>
+            );
         } else {
-            return <p>No patrimonios found.</p>;
+            return <p className='text-neutral-500'>Nenhum patrimônio encontrado.</p>;
         }
     };
 
     return (
-        <div>
-            <h2>Patrimonios</h2>
-            <div>
+        <div className='h-full p-8 flex flex-col gap-4'>
+            <h2 className='text-2xl'>Patrimônios</h2>
+            <div className='flex gap-4'>
                 <input
+                    className='border px-2 rounded-md py-1'
                     type="text"
                     placeholder="NI"
                     value={newPatrimonio.ni}
                     onChange={(e) => setNewPatrimonio({ ...newPatrimonio, ni: e.target.value })}
                 />
                 <input
+                    className='border px-2 rounded-md py-1'
                     type="text"
                     placeholder="Descrição"
                     value={newPatrimonio.descricao}
                     onChange={(e) => setNewPatrimonio({ ...newPatrimonio, descricao: e.target.value })}
                 />
                 <input
+                    className='border px-2 rounded-md py-1'
                     type="text"
                     placeholder="Localização"
                     value={newPatrimonio.localizacao}
                     onChange={(e) => setNewPatrimonio({ ...newPatrimonio, localizacao: e.target.value })}
                 />
-                <button onClick={editingPatrimonio ? handleUpdatePatrimonio : handleCreatePatrimonio}>
-                    {editingPatrimonio ? 'Update Patrimonio' : 'Create Patrimonio'}
+                <button
+                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'
+                    onClick={editingPatrimonio ? handleUpdatePatrimonio : handleCreatePatrimonio}
+                >
+                    {editingPatrimonio ? 'Atualizar Patrimônio' : 'Criar Patrimônio'}
                 </button>
             </div>
-            <ul>{listChildren()}</ul>
+            <hr />
+            <table>
+                {listChildren()}
+            </table>
         </div>
     );
 };
