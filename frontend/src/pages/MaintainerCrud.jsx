@@ -69,30 +69,30 @@ const MaintainerCrud = () => {
         if (manutentores.length > 0) {
             return (
                 <table>
-                    <tr className='text-left'>
-                        <th className="border border-neutral-500 px-2 py-1">Nome</th>
-                        <th className="border border-neutral-500 px-2 py-1">NI</th>
-                        <th className="border border-neutral-500 px-2 py-1">Área</th>
-                        <th className="border border-neutral-500 px-2 py-1">Gestor</th>
-                        <th className="border border-neutral-500 px-2 py-1">Ações</th>
+                    <tr>
+                        <th>Nome</th>
+                        <th>NI</th>
+                        <th>Área</th>
+                        <th>Gestor</th>
+                        <th>Ações</th>
                     </tr>
                     {manutentores.map((manutentor) => (
                         <tr key={manutentor.id}>
-                            <td className="border border-neutral-500 px-2 py-1">{manutentor.ni}</td>
-                            <td className="border border-neutral-500 px-2 py-1">{manutentor.nome}</td>
-                            <td className="border border-neutral-500 px-2 py-1">{manutentor.area}</td>
-                            <td className="border border-neutral-500 px-2 py-1">
+                            <td>{manutentor.ni}</td>
+                            <td>{manutentor.nome}</td>
+                            <td>{manutentor.area}</td>
+                            <td>
                                 {gestores.find((gestor) => gestor.id === manutentor.gestor)?.nome || 'N/A'}
                             </td>
-                            <td className="border border-neutral-500 px-2 py-1">
+                            <td>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                   
                                     onClick={() => handleEditManutentor(manutentor)}
                                 >
                                     Edit
                                 </button>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                   
                                     onClick={() => handleDeleteManutentor(manutentor.id)}
                                 >
                                     Delete
@@ -103,41 +103,41 @@ const MaintainerCrud = () => {
                 </table>
             );
         } else {
-            return <p className='text-neutral-500'>Nenhum manutentor encontrado.</p>;
+            return <p>Nenhum manutentor encontrado.</p>;
         }
     };
 
     return (
-        <div className="h-full p-8 flex flex-col gap-4">
-            <h2 className="text-2xl">Manutentores</h2>
-            <div className="flex gap-4">
+        <div>
+            <h2>Manutentores</h2>
+            <div>
                 <input
-                    className="border px-2 py-1 rounded-md"
+                   
                     type="text"
                     placeholder="NI"
                     value={newManutentor.ni}
                     onChange={(e) => setNewManutentor({ ...newManutentor, ni: e.target.value })}
                 />
                 <input
-                    className="border px-2 py-1 rounded-md"
+                   
                     type="text"
                     placeholder="Nome"
                     value={newManutentor.nome}
                     onChange={(e) => setNewManutentor({ ...newManutentor, nome: e.target.value })}
                 />
                 <input
-                    className="border px-2 py-1 rounded-md"
+                   
                     type="text"
                     placeholder="Área"
                     value={newManutentor.area}
                     onChange={(e) => setNewManutentor({ ...newManutentor, area: e.target.value })}
                 />
                 <select
-                    className="border px-2 py-1 rounded-md"
+                   
                     value={newManutentor.gestor}
                     onChange={(e) => setNewManutentor({ ...newManutentor, gestor: e.target.value })}
                 >
-                    <option value="">Select Gestor</option>
+                    <option value="" disabled selected>Selecione o Gestor</option>
                     {gestores.map((gestor) => (
                         <option key={gestor.id} value={gestor.id}>
                             {gestor.nome}
@@ -145,7 +145,7 @@ const MaintainerCrud = () => {
                     ))}
                 </select>
                 <button
-                    className="border rounded-md cursor-pointer hover:text-red-500 px-2 py-1"
+                   
                     onClick={editingManutentor ? handleUpdateManutentor : handleCreateManutentor}
                 >
                     {editingManutentor ? 'Update Manutentor' : 'Create Manutentor'}

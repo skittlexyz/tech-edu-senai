@@ -58,24 +58,24 @@ const AmbientCrud = () => {
         if (ambientes.length > 0) {
             return (
                 <>
-                    <tr className='text-left'>
-                        <th className='border border-neutral-500 px-2 py-1'>NI</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Nome</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+                    <tr>
+                        <th>NI</th>
+                        <th>Nome</th>
+                        <th>Ações</th>
                     </tr>
                     {ambientes.map((ambiente) => (
                         <tr key={ambiente.id}>
-                            <td className='border border-neutral-500 px-2 py-1'>{ambiente.ni}</td>
-                            <td className='border border-neutral-500 px-2 py-1'>{ambiente.nome}</td>
-                            <td className='border border-neutral-500 px-2 py-1 gap-2'>
+                            <td>{ambiente.ni}</td>
+                            <td>{ambiente.nome}</td>
+                            <td>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                   
                                     onClick={() => handleEditAmbiente(ambiente)}
                                 >
                                     Edit
                                 </button>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                   
                                     onClick={() => handleDeleteAmbiente(ambiente.id)}
                                 >
                                     Delete
@@ -86,30 +86,30 @@ const AmbientCrud = () => {
                 </>
             );
         } else {
-            return <p className='text-neutral-500'>Nenhum ambiente encontrado.</p>;
+            return <p>Nenhum ambiente encontrado.</p>;
         }
     };
 
     return (
-        <div className='h-full p-8 flex flex-col gap-4'>
-            <h2 className='text-2xl'>Ambientes</h2>
-            <div className='flex gap-4'>
+        <div>
+            <h2>Ambientes</h2>
+            <div>
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="NI"
                     value={newAmbiente.ni}
                     onChange={(e) => setNewAmbiente({ ...newAmbiente, ni: e.target.value })}
                 />
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="Nome"
                     value={newAmbiente.nome}
                     onChange={(e) => setNewAmbiente({ ...newAmbiente, nome: e.target.value })}
                 />
                 <button
-                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'
+                   
                     onClick={editingAmbiente ? handleUpdateAmbiente : handleCreateAmbiente}
                 >
                     {editingAmbiente ? 'Atualizar Ambiente' : 'Criar Ambiente'}

@@ -102,21 +102,21 @@ const ServiceOrderCrud = () => {
     if (Array.isArray(orders) && orders.length > 0) {
       return (
         <>
-          <tr className='text-left'>
-            <th className='border border-neutral-500 px-2 py-1'>Descrição</th>
-            <th className='border border-neutral-500 px-2 py-1'>Status</th>
-            <th className='border border-neutral-500 px-2 py-1'>Prioridade</th>
-            <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+          <tr>
+            <th>Descrição</th>
+            <th>Status</th>
+            <th>Prioridade</th>
+            <th>Ações</th>
           </tr>
           <tr>
             {orders.map((order) => (
               <>
-                <td className='border border-neutral-500 px-2 py-1' key={order.id}>{order.descricao}</td>
-                <td className='border border-neutral-500 px-2 py-1' key={order.id}>{order.status}</td>
-                <td className='border border-neutral-500 px-2 py-1' key={order.id}>{order.prioridade}</td>
-                <td className='border border-neutral-500 px-2 py-1 gap-2'>
-                  <button className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2' onClick={() => handleEditOrder(order)}>Edit</button>
-                  <button className='border rounded-md cursor-pointer hover:text-red-500 px-2' onClick={() => handleDeleteOrder(order.id)}>Delete</button>
+                <td key={order.id}>{order.descricao}</td>
+                <td key={order.id}>{order.status}</td>
+                <td key={order.id}>{order.prioridade}</td>
+                <td>
+                  <button onClick={() => handleEditOrder(order)}>Edit</button>
+                  <button onClick={() => handleDeleteOrder(order.id)}>Delete</button>
                 </td>
               </>
             ))}
@@ -124,70 +124,70 @@ const ServiceOrderCrud = () => {
         </>
       )
     } else {
-      return <p className='text-neutral-500'>Nenhuma ordem de serviço encontrada.</p>;
+      return <p>Nenhuma ordem de serviço encontrada.</p>;
     }
   };
 
   return (
-    <div className='h-full p-8 flex flex-col gap-4'>
-      <h2 className='text-2xl'>Ordens de Serviço</h2>
-      <div className='flex gap-4'>
+    <div>
+      <h2>Ordens de Serviço</h2>
+      <div>
         <input
-          className='border px-2 rounded-md py-1'
+         
           type="text"
           placeholder="Descrição"
           value={newOrder.descricao}
           onChange={(e) => setNewOrder({ ...newOrder, descricao: e.target.value })}
         />
         <select
-          className='border px-2 rounded-md py-1'
+         
           value={newOrder.status}
           onChange={(e) => setNewOrder({ ...newOrder, status: e.target.value })}
         >
-          <option className='text-black' selected value="">Selecione o Andamento</option>
-          <option className='text-black' value="iniciada">Iniciada</option>
-          <option className='text-black' value="em andamento">Em Andamento</option>
-          <option className='text-black' value="finalizada">Finalizada</option>
-          <option className='text-black' value="cancelada">Cancelada</option>
+          <option disabled selected value="">Selecione o Andamento</option>
+          <option value="iniciada">Iniciada</option>
+          <option value="em andamento">Em Andamento</option>
+          <option value="finalizada">Finalizada</option>
+          <option value="cancelada">Cancelada</option>
         </select>
         <select
-          className='border px-2 rounded-md py-1'
+         
           value={newOrder.prioridade}
           onChange={(e) => setNewOrder({ ...newOrder, prioridade: e.target.value })}
         >
-          <option className='text-black' selected value="">Selecione a Prioridade</option>
-          <option className='text-black' value="alta">Alta</option>
-          <option className='text-black' value="media">Média</option>
-          <option className='text-black' value="baixa">Baixa</option>
+          <option disabled selected value="">Selecione a Prioridade</option>
+          <option value="alta">Alta</option>
+          <option value="media">Média</option>
+          <option value="baixa">Baixa</option>
         </select>
 
         <select
-          className='border px-2 rounded-md py-1'
+         
           value={newOrder.ambiente}
           onChange={(e) => setNewOrder({ ...newOrder, ambiente: e.target.value })}
         >
-          <option className='text-black' value="">Selecione o Ambiente</option>
+          <option disabled selected value="">Selecione o Ambiente</option>
           {ambientes.map((ambiente) => (
-            <option className='text-black' key={ambiente.id} value={ambiente.id}>
+            <option key={ambiente.id} value={ambiente.id}>
               {ambiente.nome}
             </option>
           ))}
         </select>
 
         <select
-          className='border px-2 rounded-md py-1'
+         
           value={newOrder.manutentor}
           onChange={(e) => setNewOrder({ ...newOrder, manutentor: e.target.value })}
         >
-          <option className='text-black' value="">Selecione o Manutentor</option>
+          <option disabled selected value="">Selecione o Manutentor</option>
           {manutentores.map((manutentor) => (
-            <option className='text-black' key={manutentor.id} value={manutentor.id}>
+            <option key={manutentor.id} value={manutentor.id}>
               {manutentor.nome}
             </option>
           ))}
         </select>
 
-        <button className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1' onClick={editingOrder ? handleUpdateOrder : handleCreateOrder}>
+        <button onClick={editingOrder ? handleUpdateOrder : handleCreateOrder}>
           {editingOrder ? 'Atualizar Ordem' : 'Criar Ordem'}
         </button>
       </div>

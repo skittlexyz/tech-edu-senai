@@ -58,26 +58,26 @@ const HeritageCrud = () => {
         if (patrimonios.length > 0) {
             return (
                 <>
-                    <tr className='text-left'>
-                        <th className='border border-neutral-500 px-2 py-1'>NI</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Descrição</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Localização</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+                    <tr>
+                        <th>NI</th>
+                        <th>Descrição</th>
+                        <th>Localização</th>
+                        <th>Ações</th>
                     </tr>
                     {patrimonios.map((patrimonio) => (
                         <tr key={patrimonio.id}>
-                            <td className='border border-neutral-500 px-2 py-1'>{patrimonio.ni}</td>
-                            <td className='border border-neutral-500 px-2 py-1'>{patrimonio.descricao}</td>
-                            <td className='border border-neutral-500 px-2 py-1'>{patrimonio.localizacao}</td>
-                            <td className='border border-neutral-500 px-2 py-1 gap-2'>
+                            <td>{patrimonio.ni}</td>
+                            <td>{patrimonio.descricao}</td>
+                            <td>{patrimonio.localizacao}</td>
+                            <td>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                   
                                     onClick={() => handleEditPatrimonio(patrimonio)}
                                 >
                                     Edit
                                 </button>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                   
                                     onClick={() => handleDeletePatrimonio(patrimonio.id)}
                                 >
                                     Delete
@@ -88,37 +88,37 @@ const HeritageCrud = () => {
                 </>
             );
         } else {
-            return <p className='text-neutral-500'>Nenhum patrimônio encontrado.</p>;
+            return <p>Nenhum patrimônio encontrado.</p>;
         }
     };
 
     return (
-        <div className='h-full p-8 flex flex-col gap-4'>
-            <h2 className='text-2xl'>Patrimônios</h2>
-            <div className='flex gap-4'>
+        <div>
+            <h2>Patrimônios</h2>
+            <div>
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="NI"
                     value={newPatrimonio.ni}
                     onChange={(e) => setNewPatrimonio({ ...newPatrimonio, ni: e.target.value })}
                 />
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="Descrição"
                     value={newPatrimonio.descricao}
                     onChange={(e) => setNewPatrimonio({ ...newPatrimonio, descricao: e.target.value })}
                 />
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="Localização"
                     value={newPatrimonio.localizacao}
                     onChange={(e) => setNewPatrimonio({ ...newPatrimonio, localizacao: e.target.value })}
                 />
                 <button
-                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'
+                   
                     onClick={editingPatrimonio ? handleUpdatePatrimonio : handleCreatePatrimonio}
                 >
                     {editingPatrimonio ? 'Atualizar Patrimônio' : 'Criar Patrimônio'}

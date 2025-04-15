@@ -24,25 +24,25 @@ const Login = ({ setAuthenticated }) => {
     };
 
     return (
-        <div className='h-full w-full flex flex-col justify-center items-center gap-4'>
-            <h2 className="text-2xl">Login</h2>
-            <form className='flex flex-col gap-4' onSubmit={handleLogin}>
+        <div className='credentials-form'>
+            <h2>Login</h2>
+            <form onSubmit={handleLogin}>
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1' type="submit">Login</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     );

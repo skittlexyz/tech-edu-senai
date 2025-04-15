@@ -30,11 +30,11 @@ const Register = ({ setAuthenticated }) => {
     };
 
     return (
-        <div className='h-full w-full flex flex-col justify-center items-center gap-4'>
-            <h2 className="text-2xl">Register</h2>
-            <form className='flex flex-col gap-4' onSubmit={handleRegister}>
+        <div className='credentials-form'>
+            <h2>Register</h2>
+            <form onSubmit={handleRegister}>
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="text"
                     placeholder="Username"
                     value={username}
@@ -42,7 +42,7 @@ const Register = ({ setAuthenticated }) => {
                     required
                 />
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="email"
                     placeholder="Email"
                     value={email}
@@ -50,7 +50,7 @@ const Register = ({ setAuthenticated }) => {
                     required
                 />
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="password"
                     placeholder="Password"
                     value={password}
@@ -59,7 +59,7 @@ const Register = ({ setAuthenticated }) => {
                 />
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                <button className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'  type="submit">Register</button>
+                <button  type="submit">Register</button>
             </form>
         </div>
     );

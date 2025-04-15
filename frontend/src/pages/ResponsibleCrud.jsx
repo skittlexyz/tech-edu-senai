@@ -60,28 +60,28 @@ const ResponsibleCrud = () => {
     const listChildren = () => {
         if (Array.isArray(responsaveis) && responsaveis.length > 0) {
             return (
-                <table className="w-full">
+                <table>
                     <thead>
-                        <tr className="text-left">
-                            <th className="border border-neutral-500 px-2 py-1">Nome</th>
-                            <th className="border border-neutral-500 px-2 py-1">NI</th>
-                            <th className="border border-neutral-500 px-2 py-1">Ações</th>
+                        <tr>
+                            <th>Nome</th>
+                            <th>NI</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {responsaveis.map((responsavel) => (
                             <tr key={responsavel.id}>
-                                <td className="border border-neutral-500 px-2 py-1">{responsavel.nome}</td>
-                                <td className="border border-neutral-500 px-2 py-1">{responsavel.ni}</td>
-                                <td className="border border-neutral-500 px-2 py-1 gap-2">
+                                <td>{responsavel.nome}</td>
+                                <td>{responsavel.ni}</td>
+                                <td>
                                     <button
-                                        className="border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2"
+                                       
                                         onClick={() => handleEditResponsavel(responsavel)}
                                     >
                                         Edit
                                     </button>
                                     <button
-                                        className="border rounded-md cursor-pointer hover:text-red-500 px-2"
+                                       
                                         onClick={() => handleDeleteResponsavel(responsavel.id)}
                                     >
                                         Delete
@@ -93,30 +93,30 @@ const ResponsibleCrud = () => {
                 </table>
             );
         } else {
-            return <p className="text-neutral-500">Nenhum responsável encontrado.</p>;
+            return <p>Nenhum responsável encontrado.</p>;
         }
     };
 
     return (
-        <div className="h-full p-8 flex flex-col gap-4">
-            <h2 className="text-2xl">Responsáveis</h2>
-            <div className="flex gap-4">
+        <div>
+            <h2>Responsáveis</h2>
+            <div>
                 <input
-                    className="border px-2 rounded-md py-1"
+                   
                     type="text"
                     placeholder="NI"
                     value={newResponsavel.ni}
                     onChange={(e) => setNewResponsavel({ ...newResponsavel, ni: e.target.value })}
                 />
                 <input
-                    className="border px-2 rounded-md py-1"
+                   
                     type="text"
                     placeholder="Nome"
                     value={newResponsavel.nome}
                     onChange={(e) => setNewResponsavel({ ...newResponsavel, nome: e.target.value })}
                 />
                 <button
-                    className="border rounded-md cursor-pointer hover:text-red-500 px-2 py-1"
+                   
                     onClick={editingResponsavel ? handleUpdateResponsavel : handleCreateResponsavel}
                 >
                     {editingResponsavel ? 'Atualizar Responsável' : 'Criar Responsável'}

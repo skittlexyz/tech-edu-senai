@@ -69,24 +69,24 @@ const HistoryCrud = () => {
         if (historicos.length > 0) {
             return (
                 <>
-                    <tr className='text-left'>
-                        <th className='border border-neutral-500 px-2 py-1'>Ordem</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Data de Encerramento</th>
-                        <th className='border border-neutral-500 px-2 py-1'>Ações</th>
+                    <tr>
+                        <th>Ordem</th>
+                        <th>Data de Encerramento</th>
+                        <th>Ações</th>
                     </tr>
                     {historicos.map((historico) => (
                         <tr key={historico.id}>
-                            <td className='border border-neutral-500 px-2 py-1'>{historico.ordem?.descricao}</td>
-                            <td className='border border-neutral-500 px-2 py-1'>{historico.data_encerramento}</td>
-                            <td className='border border-neutral-500 px-2 py-1'>
+                            <td>{historico.ordem?.descricao}</td>
+                            <td>{historico.data_encerramento}</td>
+                            <td>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 mr-2'
+                                   
                                     onClick={() => handleEditHistorico(historico)}
                                 >
                                     Edit
                                 </button>
                                 <button
-                                    className='border rounded-md cursor-pointer hover:text-red-500 px-2'
+                                   
                                     onClick={() => handleDeleteHistorico(historico.id)}
                                 >
                                     Delete
@@ -97,20 +97,20 @@ const HistoryCrud = () => {
                 </>
             );
         } else {
-            return <p className='text-neutral-500'>Nenhum histórico encontrado.</p>;
+            return <p>Nenhum histórico encontrado.</p>;
         }
     };
 
     return (
-        <div className='h-full p-8 flex flex-col gap-4'>
-            <h2 className='text-2xl'>Históricos</h2>
-            <div className='flex gap-4'>
+        <div>
+            <h2>Históricos</h2>
+            <div>
                 <select
-                    className='border px-2 rounded-md py-1'
+                   
                     value={newHistorico.ordem}
                     onChange={(e) => setNewHistorico({ ...newHistorico, ordem: e.target.value })}
                 >
-                    <option value="">Selecione a Ordem</option>
+                    <option value="" disabled selected>Selecione a Ordem</option>
                     {orders.map((order) => (
                         <option key={order.id} value={order.id}>
                             {order.descricao}
@@ -119,14 +119,14 @@ const HistoryCrud = () => {
                 </select>
 
                 <input
-                    className='border px-2 rounded-md py-1'
+                   
                     type="datetime-local"
                     value={newHistorico.data_encerramento}
                     onChange={(e) => setNewHistorico({ ...newHistorico, data_encerramento: e.target.value })}
                 />
 
                 <button
-                    className='border rounded-md cursor-pointer hover:text-red-500 px-2 py-1'
+                   
                     onClick={editingHistorico ? handleUpdateHistorico : handleCreateHistorico}
                 >
                     {editingHistorico ? 'Atualizar Histórico' : 'Criar Histórico'}

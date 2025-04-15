@@ -16,22 +16,28 @@ function App() {
 
   return (
     <Router>
-      <div className='w-screen h-screen bg-neutral-800 text-white flex flex-col'>
-        <nav className='bg-neutral-900 w-screen h-fit py-4 flex justify-between items-start gap-8 px-4'>
-          <h1 className='text-xl font-bold'>Gerenciador<br/><span className='text-red-500'>SENAI</span></h1>
-          <div className='flex gap-8 flex-wrap'>
-            <a className='hover:underline' href="/register">Register</a>
-            <a className='hover:underline' href="/login">Login</a>
-            {authenticated && (
+      <main>
+        <nav>
+          <span>
+            <h1>💾</h1>
+            <h1>Gerenciador<br/><span>SENAI</span></h1>
+          </span>
+          <div>
+            {authenticated ? (
               <>
-                <a className='hover:underline' href="/serviceorder">CRUD de Ordens de Serviço</a>
-                <a className='hover:underline' href="/maintainer">CRUD de Manutentores</a>
-                <a className='hover:underline' href="/heritage">CRUD de Patrimônios</a>
-                <a className='hover:underline' href="/ambient">Crud de Ambientes</a>
-                <a className='hover:underline' href="/manager">Crud de Gestores</a>
-                <a className='hover:underline' href="/responsible">Crud de Responsáveis</a>
-                <a className='hover:underline' href="/history">Crud de Histórico</a>
-                <a className='hover:underline' href="/logout">Logout</a>
+                <a href="/serviceorder">Ordens de Serviço</a>
+                <a href="/maintainer">Manutentores</a>
+                <a href="/heritage">Patrimônios</a>
+                <a href="/ambient">Ambientes</a>
+                <a href="/manager">Gestores</a>
+                <a href="/responsible">Responsáveis</a>
+                <a href="/history">Histórico</a>
+                <a href="/logout">Logout</a>
+              </>
+            ) : (
+              <>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
               </>
             )}
           </div>
@@ -50,10 +56,10 @@ function App() {
           <Route path="/history" element={authenticated ? <HistoricoCrud /> : <Login setAuthenticated={setAuthenticated} />} />
           <Route path="/logout" element={<Logout setAuthenticated={setAuthenticated} />} />
         </Routes>
-        <div className='bg-neutral-900 w-screen flex justify-center text-neutral-500 py-4'>
-              SENAI 2025
-        </div>
-      </div>
+        <footer>
+          © 2025 Gerenciador SENAI. Todos os direitos reservados. 
+        </footer>
+      </main>
     </Router>
   );
 }
